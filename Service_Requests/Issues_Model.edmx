@@ -1,0 +1,352 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Service_Requests_Data_GOVModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="actions">
+          <Key>
+            <PropertyRef Name="action_id" />
+          </Key>
+          <Property Name="action_id" Type="int" Nullable="false" />
+          <Property Name="issue_id" Type="int" Nullable="false" />
+          <Property Name="action_description" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="issue_types">
+          <Key>
+            <PropertyRef Name="issue_type_id" />
+          </Key>
+          <Property Name="issue_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="issue_title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="issue_type_creator_username" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="issues">
+          <Key>
+            <PropertyRef Name="issue_id" />
+          </Key>
+          <Property Name="issue_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="issue_type_id" Type="int" Nullable="false" />
+          <Property Name="issue_title" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="issue_description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="issue_creator_username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="issue_date_created" Type="datetime" Nullable="false" />
+          <Property Name="issue_ongoing" Type="bit" Nullable="false" />
+          <Property Name="issuer_id" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="issuer_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="issuer_tel" Type="nvarchar" MaxLength="12" />
+        </EntityType>
+        <EntityType Name="user_roles">
+          <Key>
+            <PropertyRef Name="user_role_id" />
+          </Key>
+          <Property Name="user_role_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="role_title" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="user_password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="user_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="user_email" Type="nvarchar" MaxLength="50" />
+          <Property Name="user_approved" Type="bit" Nullable="false" />
+          <Property Name="user_role_id" Type="int" Nullable="false" />
+          <Property Name="user_last_password_change" Type="smalldatetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_actionIssue">
+          <End Role="issues" Type="Self.issues" Multiplicity="1" />
+          <End Role="actions" Type="Self.actions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="issues">
+              <PropertyRef Name="issue_id" />
+            </Principal>
+            <Dependent Role="actions">
+              <PropertyRef Name="issue_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActionUser">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="actions" Type="Self.actions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="actions">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IssueTypeId">
+          <End Role="issue_types" Type="Self.issue_types" Multiplicity="1" />
+          <End Role="issues" Type="Self.issues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="issue_types">
+              <PropertyRef Name="issue_type_id" />
+            </Principal>
+            <Dependent Role="issues">
+              <PropertyRef Name="issue_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRoleId">
+          <End Role="user_roles" Type="Self.user_roles" Multiplicity="1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_roles">
+              <PropertyRef Name="user_role_id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="user_role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Service_Requests_Data_GOVModelStoreContainer">
+          <EntitySet Name="actions" EntityType="Self.actions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="issue_types" EntityType="Self.issue_types" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="issues" EntityType="Self.issues" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user_roles" EntityType="Self.user_roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_actionIssue" Association="Self.FK_actionIssue">
+            <End Role="issues" EntitySet="issues" />
+            <End Role="actions" EntitySet="actions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActionUser" Association="Self.FK_ActionUser">
+            <End Role="users" EntitySet="users" />
+            <End Role="actions" EntitySet="actions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IssueTypeId" Association="Self.FK_IssueTypeId">
+            <End Role="issue_types" EntitySet="issue_types" />
+            <End Role="issues" EntitySet="issues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRoleId" Association="Self.FK_UserRoleId">
+            <End Role="user_roles" EntitySet="user_roles" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Service_Requests_Data_GOVModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="action">
+          <Key>
+            <PropertyRef Name="action_id" />
+          </Key>
+          <Property Name="action_id" Type="Int32" Nullable="false" />
+          <Property Name="issue_id" Type="Int32" Nullable="false" />
+          <Property Name="action_description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="issue" Relationship="Self.FK_actionIssue" FromRole="actions" ToRole="issues" />
+          <NavigationProperty Name="user" Relationship="Service_Requests_Data_GOVModel.FK_ActionUser" FromRole="action" ToRole="user" />
+        </EntityType>
+        <EntityType Name="issue_types">
+          <Key>
+            <PropertyRef Name="issue_type_id" />
+          </Key>
+          <Property Name="issue_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="issue_title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="issue_type_creator_username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="issues" Relationship="Self.FK_IssueTypeId" FromRole="issue_types" ToRole="issues" />
+        </EntityType>
+        <EntityType Name="issue">
+          <Key>
+            <PropertyRef Name="issue_id" />
+          </Key>
+          <Property Name="issue_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="issue_type_id" Type="Int32" Nullable="false" />
+          <Property Name="issue_title" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="issue_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="issue_creator_username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="issue_date_created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="issue_ongoing" Type="Boolean" Nullable="false" />
+          <Property Name="issuer_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="issuer_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="issuer_tel" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="actions" Relationship="Self.FK_actionIssue" FromRole="issues" ToRole="actions" />
+          <NavigationProperty Name="issue_types" Relationship="Self.FK_IssueTypeId" FromRole="issues" ToRole="issue_types" />
+        </EntityType>
+        <EntityType Name="user_roles">
+          <Key>
+            <PropertyRef Name="user_role_id" />
+          </Key>
+          <Property Name="user_role_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="role_title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="Service_Requests_Data_GOVModel.FK_UserRoleId" FromRole="user_roles" ToRole="user" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="user_password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="user_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="user_email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="user_approved" Type="Boolean" Nullable="false" />
+          <Property Name="user_role_id" Type="Int32" Nullable="false" />
+          <Property Name="user_last_password_change" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="actions" Relationship="Service_Requests_Data_GOVModel.FK_ActionUser" FromRole="user" ToRole="action" />
+          <NavigationProperty Name="user_roles" Relationship="Service_Requests_Data_GOVModel.FK_UserRoleId" FromRole="user" ToRole="user_roles" />
+        </EntityType>
+        <Association Name="FK_actionIssue">
+          <End Role="issues" Type="Self.issue" Multiplicity="1" />
+          <End Role="actions" Type="Self.action" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="issues">
+              <PropertyRef Name="issue_id" />
+            </Principal>
+            <Dependent Role="actions">
+              <PropertyRef Name="issue_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IssueTypeId">
+          <End Role="issue_types" Type="Self.issue_types" Multiplicity="1" />
+          <End Role="issues" Type="Self.issue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="issue_types">
+              <PropertyRef Name="issue_type_id" />
+            </Principal>
+            <Dependent Role="issues">
+              <PropertyRef Name="issue_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Service_Requests_Data_GOVEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="actions" EntityType="Self.action" />
+          <EntitySet Name="issue_types" EntityType="Self.issue_types" />
+          <EntitySet Name="issues" EntityType="Self.issue" />
+          <EntitySet Name="user_roles" EntityType="Self.user_roles" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <AssociationSet Name="FK_actionIssue" Association="Self.FK_actionIssue">
+            <End Role="issues" EntitySet="issues" />
+            <End Role="actions" EntitySet="actions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IssueTypeId" Association="Self.FK_IssueTypeId">
+            <End Role="issue_types" EntitySet="issue_types" />
+            <End Role="issues" EntitySet="issues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActionUser" Association="Service_Requests_Data_GOVModel.FK_ActionUser">
+            <End Role="user" EntitySet="users" />
+            <End Role="action" EntitySet="actions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRoleId" Association="Service_Requests_Data_GOVModel.FK_UserRoleId">
+            <End Role="user_roles" EntitySet="user_roles" />
+            <End Role="user" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_ActionUser">
+          <End Type="Service_Requests_Data_GOVModel.user" Role="user" Multiplicity="1" />
+          <End Type="Service_Requests_Data_GOVModel.action" Role="action" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="action">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRoleId">
+          <End Type="Service_Requests_Data_GOVModel.user_roles" Role="user_roles" Multiplicity="1" />
+          <End Type="Service_Requests_Data_GOVModel.user" Role="user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_roles">
+              <PropertyRef Name="user_role_id" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="user_role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Service_Requests_Data_GOVModelStoreContainer" CdmEntityContainer="Service_Requests_Data_GOVEntities">
+          <EntitySetMapping Name="actions">
+            <EntityTypeMapping TypeName="Service_Requests_Data_GOVModel.action">
+              <MappingFragment StoreEntitySet="actions">
+                <ScalarProperty Name="action_id" ColumnName="action_id" />
+                <ScalarProperty Name="issue_id" ColumnName="issue_id" />
+                <ScalarProperty Name="action_description" ColumnName="action_description" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="issue_types">
+            <EntityTypeMapping TypeName="Service_Requests_Data_GOVModel.issue_types">
+              <MappingFragment StoreEntitySet="issue_types">
+                <ScalarProperty Name="issue_type_id" ColumnName="issue_type_id" />
+                <ScalarProperty Name="issue_title" ColumnName="issue_title" />
+                <ScalarProperty Name="issue_type_creator_username" ColumnName="issue_type_creator_username" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="issues">
+            <EntityTypeMapping TypeName="Service_Requests_Data_GOVModel.issue">
+              <MappingFragment StoreEntitySet="issues">
+                <ScalarProperty Name="issue_id" ColumnName="issue_id" />
+                <ScalarProperty Name="issue_type_id" ColumnName="issue_type_id" />
+                <ScalarProperty Name="issue_title" ColumnName="issue_title" />
+                <ScalarProperty Name="issue_description" ColumnName="issue_description" />
+                <ScalarProperty Name="issue_creator_username" ColumnName="issue_creator_username" />
+                <ScalarProperty Name="issue_date_created" ColumnName="issue_date_created" />
+                <ScalarProperty Name="issue_ongoing" ColumnName="issue_ongoing" />
+                <ScalarProperty Name="issuer_id" ColumnName="issuer_id" />
+                <ScalarProperty Name="issuer_name" ColumnName="issuer_name" />
+                <ScalarProperty Name="issuer_tel" ColumnName="issuer_tel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_roles">
+            <EntityTypeMapping TypeName="Service_Requests_Data_GOVModel.user_roles">
+              <MappingFragment StoreEntitySet="user_roles">
+                <ScalarProperty Name="user_role_id" ColumnName="user_role_id" />
+                <ScalarProperty Name="role_title" ColumnName="role_title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="Service_Requests_Data_GOVModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="user_username" ColumnName="user_username" />
+                <ScalarProperty Name="user_password" ColumnName="user_password" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="user_email" ColumnName="user_email" />
+                <ScalarProperty Name="user_approved" ColumnName="user_approved" />
+                <ScalarProperty Name="user_role_id" ColumnName="user_role_id" />
+                <ScalarProperty Name="user_last_password_change" ColumnName="user_last_password_change" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="action_id" />
           </Key>
-          <Property Name="action_id" Type="int" Nullable="false" />
+          <Property Name="action_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="issue_id" Type="int" Nullable="false" />
           <Property Name="action_description" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="user_id" Type="int" Nullable="false" />

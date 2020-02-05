@@ -31,7 +31,7 @@ namespace Service_Requests.UI
                 i.issue_title = title_text.Text;
                 i.issue_description = comment_text.Text;
                 i.issue_creator_username = SessionInfo.userName;
-                i.issue_creator_username = date.ToString();
+                i.issue_date_created = date;
                 i.issue_ongoing = true;
                 i.issuer_id = issuerID_text.Text;
                 i.issuer_name = issuerName_text.Text;
@@ -40,6 +40,12 @@ namespace Service_Requests.UI
                 i.issue_type_id = id.getIssueIDbyTitle(issueType_combo.Text);
 
                 id.saveIssue(i);
+
+                title_text.Text = "";
+                comment_text.Text = "";
+                issuerID_text.Text = "";
+                issuerName_text.Text = "";
+                issuerTel_text.Text = "";
             }
         }
 

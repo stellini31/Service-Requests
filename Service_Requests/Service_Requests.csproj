@@ -57,7 +57,9 @@
     <Compile Include="action.cs">
       <DependentUpon>Issues_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\Actions_Data.cs" />
     <Compile Include="Database\Issues_Data.cs" />
+    <Compile Include="Database\IssueType_Data.cs" />
     <Compile Include="Database\Users_Data.cs" />
     <Compile Include="SessionInfo.cs" />
     <Compile Include="Tools\Crypto.cs" />
@@ -102,6 +104,12 @@
     <Compile Include="UI\MainApp.Designer.cs">
       <DependentUpon>MainApp.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\ManageIssue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ManageIssue.Designer.cs">
+      <DependentUpon>ManageIssue.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\RegisterUser.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -131,6 +139,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\MainApp.resx">
       <DependentUpon>MainApp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ManageIssue.resx">
+      <DependentUpon>ManageIssue.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\RegisterUser.resx">
       <DependentUpon>RegisterUser.cs</DependentUpon>

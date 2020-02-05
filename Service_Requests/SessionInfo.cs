@@ -8,6 +8,7 @@ namespace Service_Rrequests
 {
     public static class SessionInfo
     {
+        public static int userId;
         public static string userName;
         public static DateTime timeLogged;
     }

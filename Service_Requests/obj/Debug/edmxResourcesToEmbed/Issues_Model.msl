@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Service_Requests_Data_GOVModelStoreContainer" CdmEntityContainer="Service_Requests_Data_GOVEntities">
+    <EntitySetMapping Name="actions">
+      <EntityTypeMapping TypeName="Service_Requests_Data_GOVModel.action">
+        <MappingFragment StoreEntitySet="actions">
+          <ScalarProperty Name="action_id" ColumnName="action_id" />
+          <ScalarProperty Name="issue_id" ColumnName="issue_id" />
+          <ScalarProperty Name="action_description" ColumnName="action_description" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="issue_types">
+      <EntityTypeMapping TypeName="Service_Requests_Data_GOVModel.issue_types">
+        <MappingFragment StoreEntitySet="issue_types">
+          <ScalarProperty Name="issue_type_id" ColumnName="issue_type_id" />
+          <ScalarProperty Name="issue_title" ColumnName="issue_title" />
+          <ScalarProperty Name="issue_type_creator_username" ColumnName="issue_type_creator_username" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="issues">
+      <EntityTypeMapping TypeName="Service_Requests_Data_GOVModel.issue">
+        <MappingFragment StoreEntitySet="issues">
+          <ScalarProperty Name="issue_id" ColumnName="issue_id" />
+          <ScalarProperty Name="issue_type_id" ColumnName="issue_type_id" />
+          <ScalarProperty Name="issue_title" ColumnName="issue_title" />
+          <ScalarProperty Name="issue_description" ColumnName="issue_description" />
+          <ScalarProperty Name="issue_creator_username" ColumnName="issue_creator_username" />
+          <ScalarProperty Name="issue_date_created" ColumnName="issue_date_created" />
+          <ScalarProperty Name="issue_ongoing" ColumnName="issue_ongoing" />
+          <ScalarProperty Name="issuer_id" ColumnName="issuer_id" />
+          <ScalarProperty Name="issuer_name" ColumnName="issuer_name" />
+          <ScalarProperty Name="issuer_tel" ColumnName="issuer_tel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="user_roles">
+      <EntityTypeMapping TypeName="Service_Requests_Data_GOVModel.user_roles">
+        <MappingFragment StoreEntitySet="user_roles">
+          <ScalarProperty Name="user_role_id" ColumnName="user_role_id" />
+          <ScalarProperty Name="role_title" ColumnName="role_title" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="Service_Requests_Data_GOVModel.user">
+        <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="user_username" ColumnName="user_username" />
+          <ScalarProperty Name="user_password" ColumnName="user_password" />
+          <ScalarProperty Name="user_name" ColumnName="user_name" />
+          <ScalarProperty Name="user_email" ColumnName="user_email" />
+          <ScalarProperty Name="user_approved" ColumnName="user_approved" />
+          <ScalarProperty Name="user_role_id" ColumnName="user_role_id" />
+          <ScalarProperty Name="user_last_password_change" ColumnName="user_last_password_change" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

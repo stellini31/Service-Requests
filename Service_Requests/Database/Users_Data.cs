@@ -81,5 +81,14 @@ namespace Service_Rrequests
             else return 4;   //cannot connect t DB    
             return 2;   //invalid username/ password
         }
+
+        public int getUserIdFromUsername(string username)
+        {
+            using (var dbContext = new Service_Requests_Data_GOVEntities())
+            {
+                ud = dbContext.users.Where(u => u.user_username.Equals(username)).FirstOrDefault<user>();        
+            }
+            return ud.user_id;
+        }
     }
 }

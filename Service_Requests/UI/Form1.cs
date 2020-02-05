@@ -48,6 +48,7 @@ namespace Service_Requests.UI
                     status_label.Visible = true;
                     break;
                 default:
+                    SessionInfo.userId = ud.getUserIdFromUsername(username);
                     SessionInfo.userName = username;
                     SessionInfo.timeLogged = DateTime.Now;
                     this.Hide();

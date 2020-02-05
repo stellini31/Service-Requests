@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Service_Requests_Data_GOVModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="actions">
+    <Key>
+      <PropertyRef Name="action_id" />
+    </Key>
+    <Property Name="action_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="issue_id" Type="int" Nullable="false" />
+    <Property Name="action_description" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="user_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="issue_types">
+    <Key>
+      <PropertyRef Name="issue_type_id" />
+    </Key>
+    <Property Name="issue_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="issue_title" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="issue_type_creator_username" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="issues">
+    <Key>
+      <PropertyRef Name="issue_id" />
+    </Key>
+    <Property Name="issue_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="issue_type_id" Type="int" Nullable="false" />
+    <Property Name="issue_title" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="issue_description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="issue_creator_username" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="issue_date_created" Type="datetime" Nullable="false" />
+    <Property Name="issue_ongoing" Type="bit" Nullable="false" />
+    <Property Name="issuer_id" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="issuer_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="issuer_tel" Type="nvarchar" MaxLength="12" />
+  </EntityType>
+  <EntityType Name="user_roles">
+    <Key>
+      <PropertyRef Name="user_role_id" />
+    </Key>
+    <Property Name="user_role_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="role_title" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_username" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="user_password" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="user_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="user_email" Type="nvarchar" MaxLength="50" />
+    <Property Name="user_approved" Type="bit" Nullable="false" />
+    <Property Name="user_role_id" Type="int" Nullable="false" />
+    <Property Name="user_last_password_change" Type="smalldatetime" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_actionIssue">
+    <End Role="issues" Type="Self.issues" Multiplicity="1" />
+    <End Role="actions" Type="Self.actions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="issues">
+        <PropertyRef Name="issue_id" />
+      </Principal>
+      <Dependent Role="actions">
+        <PropertyRef Name="issue_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ActionUser">
+    <End Role="users" Type="Self.users" Multiplicity="1" />
+    <End Role="actions" Type="Self.actions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="actions">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IssueTypeId">
+    <End Role="issue_types" Type="Self.issue_types" Multiplicity="1" />
+    <End Role="issues" Type="Self.issues" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="issue_types">
+        <PropertyRef Name="issue_type_id" />
+      </Principal>
+      <Dependent Role="issues">
+        <PropertyRef Name="issue_type_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRoleId">
+    <End Role="user_roles" Type="Self.user_roles" Multiplicity="1" />
+    <End Role="users" Type="Self.users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user_roles">
+        <PropertyRef Name="user_role_id" />
+      </Principal>
+      <Dependent Role="users">
+        <PropertyRef Name="user_role_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Service_Requests_Data_GOVModelStoreContainer">
+    <EntitySet Name="actions" EntityType="Self.actions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="issue_types" EntityType="Self.issue_types" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="issues" EntityType="Self.issues" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="user_roles" EntityType="Self.user_roles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_actionIssue" Association="Self.FK_actionIssue">
+      <End Role="issues" EntitySet="issues" />
+      <End Role="actions" EntitySet="actions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ActionUser" Association="Self.FK_ActionUser">
+      <End Role="users" EntitySet="users" />
+      <End Role="actions" EntitySet="actions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IssueTypeId" Association="Self.FK_IssueTypeId">
+      <End Role="issue_types" EntitySet="issue_types" />
+      <End Role="issues" EntitySet="issues" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRoleId" Association="Self.FK_UserRoleId">
+      <End Role="user_roles" EntitySet="user_roles" />
+      <End Role="users" EntitySet="users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

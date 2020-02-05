@@ -32,9 +32,9 @@
             this.column4_label = new System.Windows.Forms.Label();
             this.column3_label = new System.Windows.Forms.Label();
             this.column2_label = new System.Windows.Forms.Label();
-            this.column1_label = new System.Windows.Forms.Label();
             this.tablePanel = new System.Windows.Forms.Panel();
             this.create_issue_button = new System.Windows.Forms.Button();
+            this.column1_label = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tablePanel.SuspendLayout();
             this.SuspendLayout();
@@ -48,10 +48,10 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.Controls.Add(this.column1_label, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.column4_label, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.column3_label, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.column2_label, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.column1_label, 0, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
@@ -89,17 +89,6 @@
             this.column2_label.TabIndex = 1;
             this.column2_label.Text = "Comment";
             // 
-            // column1_label
-            // 
-            this.column1_label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.column1_label.AutoSize = true;
-            this.column1_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.column1_label.Location = new System.Drawing.Point(85, 0);
-            this.column1_label.Name = "column1_label";
-            this.column1_label.Size = new System.Drawing.Size(49, 613);
-            this.column1_label.TabIndex = 0;
-            this.column1_label.Text = "Title";
-            // 
             // tablePanel
             // 
             this.tablePanel.Controls.Add(this.tableLayoutPanel1);
@@ -118,6 +107,16 @@
             this.create_issue_button.Text = "Create Issue";
             this.create_issue_button.UseVisualStyleBackColor = true;
             this.create_issue_button.Click += new System.EventHandler(this.create_issue_button_Click);
+            // 
+            // column1_label
+            // 
+            this.column1_label.AutoSize = true;
+            this.column1_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.column1_label.Location = new System.Drawing.Point(3, 0);
+            this.column1_label.Name = "column1_label";
+            this.column1_label.Size = new System.Drawing.Size(49, 25);
+            this.column1_label.TabIndex = 4;
+            this.column1_label.Text = "Title";
             // 
             // MainApp
             // 
@@ -142,8 +141,8 @@
         private System.Windows.Forms.Label column4_label;
         private System.Windows.Forms.Label column3_label;
         private System.Windows.Forms.Label column2_label;
-        private System.Windows.Forms.Label column1_label;
         private System.Windows.Forms.Panel tablePanel;
         private System.Windows.Forms.Button create_issue_button;
+        private System.Windows.Forms.Label column1_label;
     }
 }

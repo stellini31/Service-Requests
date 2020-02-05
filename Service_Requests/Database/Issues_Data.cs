@@ -1,5 +1,6 @@
 ﻿using Service_Requests;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,19 @@ namespace Service_Rrequests.Database
         public IssuesData()
         {
 
+        }
+
+        public List<issue> getAllIssues()
+        {
+            List<issue> issues = new List<issue>();
+            using (var dbContext = new Service_Requests_Data_GOVEntities())
+            {
+                foreach(issue i in dbContext.issues)
+                {
+                    issues.Add(i);
+                }
+            }
+            return issues;
         }
 
         public int getIssueIDbyTitle(string title)
@@ -37,6 +51,19 @@ namespace Service_Rrequests.Database
             catch
             {
                 return 0;
+            }
+        }
+
+        public void toggleIssueStatusTo(bool status, int issueId)
+        {
+            using (var dbContext = new Service_Requests_Data_GOVEntities())
+            {
+                var result = dbContext.issues.SingleOrDefault(i => i.issue_id == issueId);
+                if (result != null)
+                {
+                    result.issue_ongoing = status;
+                    dbContext.SaveChanges();
+                }
             }
         }
     }

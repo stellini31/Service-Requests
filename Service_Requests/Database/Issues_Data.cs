@@ -28,12 +28,12 @@ namespace Service_Rrequests.Database
             return issues;
         }
 
-        public int getIssueIDbyTitle(string title)
+        public issue getIssueById(int id)
         {
             using (var dbContext = new Service_Requests_Data_GOVEntities())
             {
-                var issueType = dbContext.issue_types.Where(i => i.issue_title.Equals(title)).FirstOrDefault<issue_types>();
-                return issueType.issue_type_id;
+                issue iss = dbContext.issues.Where(i => i.issue_id.Equals(id)).FirstOrDefault<issue>();
+                return iss;
             }
         }
 
@@ -52,6 +52,23 @@ namespace Service_Rrequests.Database
             {
                 return 0;
             }
+        }
+
+        public void updateIssueData(int issueId, string description, string name, string id, string tel, int issueTypeId)
+        {
+            using (var dbContext = new Service_Requests_Data_GOVEntities())
+            {
+                issue isue = dbContext.issues.SingleOrDefault(i => i.issue_id == issueId);
+                if (isue != null)
+                {
+                    isue.issue_description = description;
+                    isue.issuer_name = name;
+                    isue.issuer_id = id;
+                    isue.issuer_tel = tel;
+                    isue.issue_type_id = issueTypeId;
+                    dbContext.SaveChanges();
+                }
+            }  
         }
 
         public void toggleIssueStatusTo(bool status, int issueId)

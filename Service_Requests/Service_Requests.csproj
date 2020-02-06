@@ -60,7 +60,11 @@
     <Compile Include="Database\Actions_Data.cs" />
     <Compile Include="Database\Issues_Data.cs" />
     <Compile Include="Database\IssueType_Data.cs" />
+    <Compile Include="Database\Reminders_Data.cs" />
     <Compile Include="Database\Users_Data.cs" />
+    <Compile Include="reminder.cs">
+      <DependentUpon>Issues_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="SessionInfo.cs" />
     <Compile Include="Tools\Crypto.cs" />
     <Compile Include="issue.cs">

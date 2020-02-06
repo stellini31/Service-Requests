@@ -18,6 +18,7 @@ namespace Service_Requests
         public user()
         {
             this.actions = new HashSet<action>();
+            this.reminders = new HashSet<reminder>();
         }
     
         public int user_id { get; set; }
@@ -32,5 +33,7 @@ namespace Service_Requests
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<action> actions { get; set; }
         public virtual user_roles user_roles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<reminder> reminders { get; set; }
     }
 }

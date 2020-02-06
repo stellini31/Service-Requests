@@ -14,11 +14,29 @@ namespace Service_Requests.Database
 
         }
 
+        public int getIssueTypeIDbyTitle(string title)
+        {
+            using (var dbContext = new Service_Requests_Data_GOVEntities())
+            {
+                var issueType = dbContext.issue_types.Where(i => i.issue_title.Equals(title)).FirstOrDefault<issue_types>();
+                return issueType.issue_type_id;
+            }
+        }
+
         public issue_types getIssueTypeById(int ID)
         {
             using (var dbContext = new Service_Requests_Data_GOVEntities())
             {
                 var issueType = dbContext.issue_types.Where(i => i.issue_type_id.Equals(ID)).FirstOrDefault<issue_types>();
+                return issueType;
+            }
+        }
+
+        public issue_types getIssueTypeByTitle(string title)
+        {
+            using (var dbContext = new Service_Requests_Data_GOVEntities())
+            {
+                var issueType = dbContext.issue_types.Where(i => i.issue_title.Equals(title)).FirstOrDefault<issue_types>();
                 return issueType;
             }
         }

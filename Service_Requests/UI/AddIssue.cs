@@ -1,4 +1,5 @@
-﻿using Service_Rrequests;
+﻿using Service_Requests.Database;
+using Service_Rrequests;
 using Service_Rrequests.Database;
 using System;
 using System.Collections;
@@ -27,6 +28,7 @@ namespace Service_Requests.UI
                 issue i = new issue();
                 IssuesData id = new IssuesData();
                 DateTime date = DateTime.Now;
+                IssueType_Data itd = new IssueType_Data();
 
                 i.issue_title = title_text.Text;
                 i.issue_description = comment_text.Text;
@@ -37,7 +39,7 @@ namespace Service_Requests.UI
                 i.issuer_name = issuerName_text.Text;
                 i.issuer_tel = issuerTel_text.Text;
 
-                i.issue_type_id = id.getIssueIDbyTitle(issueType_combo.Text);
+                i.issue_type_id = itd.getIssueTypeIDbyTitle(issueType_combo.Text);
 
                 id.saveIssue(i);
 

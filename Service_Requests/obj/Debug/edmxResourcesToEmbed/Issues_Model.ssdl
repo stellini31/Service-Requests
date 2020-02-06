@@ -32,6 +32,16 @@
     <Property Name="issuer_name" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="issuer_tel" Type="nvarchar" MaxLength="12" />
   </EntityType>
+  <EntityType Name="reminders">
+    <Key>
+      <PropertyRef Name="reminder_issue_id" />
+      <PropertyRef Name="reminder_user_id" />
+    </Key>
+    <Property Name="reminder_issue_id" Type="int" Nullable="false" />
+    <Property Name="reminder_user_id" Type="int" Nullable="false" />
+    <Property Name="remider_date" Type="datetime" Nullable="false" />
+    <Property Name="reminder_enabled" Type="bit" Nullable="false" />
+  </EntityType>
   <EntityType Name="user_roles">
     <Key>
       <PropertyRef Name="user_role_id" />
@@ -88,6 +98,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_reminderIssueId">
+    <End Role="issues" Type="Self.issues" Multiplicity="1" />
+    <End Role="reminders" Type="Self.reminders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="issues">
+        <PropertyRef Name="issue_id" />
+      </Principal>
+      <Dependent Role="reminders">
+        <PropertyRef Name="reminder_issue_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_reminderUserId">
+    <End Role="users" Type="Self.users" Multiplicity="1" />
+    <End Role="reminders" Type="Self.reminders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="reminders">
+        <PropertyRef Name="reminder_user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_UserRoleId">
     <End Role="user_roles" Type="Self.user_roles" Multiplicity="1" />
     <End Role="users" Type="Self.users" Multiplicity="*" />
@@ -104,6 +138,7 @@
     <EntitySet Name="actions" EntityType="Self.actions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="issue_types" EntityType="Self.issue_types" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="issues" EntityType="Self.issues" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="reminders" EntityType="Self.reminders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="user_roles" EntityType="Self.user_roles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_actionIssue" Association="Self.FK_actionIssue">
@@ -117,6 +152,14 @@
     <AssociationSet Name="FK_IssueTypeId" Association="Self.FK_IssueTypeId">
       <End Role="issue_types" EntitySet="issue_types" />
       <End Role="issues" EntitySet="issues" />
+    </AssociationSet>
+    <AssociationSet Name="FK_reminderIssueId" Association="Self.FK_reminderIssueId">
+      <End Role="issues" EntitySet="issues" />
+      <End Role="reminders" EntitySet="reminders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_reminderUserId" Association="Self.FK_reminderUserId">
+      <End Role="users" EntitySet="users" />
+      <End Role="reminders" EntitySet="reminders" />
     </AssociationSet>
     <AssociationSet Name="FK_UserRoleId" Association="Self.FK_UserRoleId">
       <End Role="user_roles" EntitySet="user_roles" />

@@ -14,6 +14,9 @@
         <AssociationConnector Association="Service_Requests_Data_GOVModel.FK_IssueTypeId" ManuallyRouted="false" />
         <AssociationConnector Association="Service_Requests_Data_GOVModel.FK_ActionUser" />
         <AssociationConnector Association="Service_Requests_Data_GOVModel.FK_UserRoleId" />
+        <EntityTypeShape EntityType="Service_Requests_Data_GOVModel.reminder" Width="1.5" PointX="5.25" PointY="4.875" />
+        <AssociationConnector Association="Service_Requests_Data_GOVModel.FK_reminderIssueId" />
+        <AssociationConnector Association="Service_Requests_Data_GOVModel.FK_reminderUserId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

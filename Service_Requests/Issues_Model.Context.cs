@@ -30,5 +30,6 @@ namespace Service_Requests
         public virtual DbSet<issue> issues { get; set; }
         public virtual DbSet<user_roles> user_roles { get; set; }
         public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<reminder> reminders { get; set; }
     }
 }

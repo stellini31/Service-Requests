@@ -36,6 +36,7 @@
     <Property Name="issuer_tel" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="actions" Relationship="Self.FK_actionIssue" FromRole="issues" ToRole="actions" />
     <NavigationProperty Name="issue_types" Relationship="Self.FK_IssueTypeId" FromRole="issues" ToRole="issue_types" />
+    <NavigationProperty Name="reminders" Relationship="Service_Requests_Data_GOVModel.FK_reminderIssueId" FromRole="issue" ToRole="reminder" />
   </EntityType>
   <EntityType Name="user_roles">
     <Key>
@@ -59,6 +60,7 @@
     <Property Name="user_last_password_change" Type="DateTime" Nullable="false" Precision="0" />
     <NavigationProperty Name="actions" Relationship="Service_Requests_Data_GOVModel.FK_ActionUser" FromRole="user" ToRole="action" />
     <NavigationProperty Name="user_roles" Relationship="Service_Requests_Data_GOVModel.FK_UserRoleId" FromRole="user" ToRole="user_roles" />
+    <NavigationProperty Name="reminders" Relationship="Service_Requests_Data_GOVModel.FK_reminderUserId" FromRole="user" ToRole="reminder" />
   </EntityType>
   <Association Name="FK_actionIssue">
     <End Role="issues" Type="Self.issue" Multiplicity="1" />
@@ -106,6 +108,15 @@
       <End Role="user_roles" EntitySet="user_roles" />
       <End Role="user" EntitySet="users" />
     </AssociationSet>
+    <EntitySet Name="reminders" EntityType="Service_Requests_Data_GOVModel.reminder" />
+    <AssociationSet Name="FK_reminderIssueId" Association="Service_Requests_Data_GOVModel.FK_reminderIssueId">
+      <End Role="issue" EntitySet="issues" />
+      <End Role="reminder" EntitySet="reminders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_reminderUserId" Association="Service_Requests_Data_GOVModel.FK_reminderUserId">
+      <End Role="user" EntitySet="users" />
+      <End Role="reminder" EntitySet="reminders" />
+    </AssociationSet>
   </EntityContainer>
   <Association Name="FK_ActionUser">
     <End Type="Service_Requests_Data_GOVModel.user" Role="user" Multiplicity="1" />
@@ -128,6 +139,42 @@
       </Principal>
       <Dependent Role="user">
         <PropertyRef Name="user_role_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="reminder">
+    <Key>
+      <PropertyRef Name="reminder_issue_id" />
+      <PropertyRef Name="reminder_user_id" />
+    </Key>
+    <Property Name="reminder_issue_id" Type="Int32" Nullable="false" />
+    <Property Name="reminder_user_id" Type="Int32" Nullable="false" />
+    <Property Name="remider_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="reminder_enabled" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="issue" Relationship="Service_Requests_Data_GOVModel.FK_reminderIssueId" FromRole="reminder" ToRole="issue" />
+    <NavigationProperty Name="user" Relationship="Service_Requests_Data_GOVModel.FK_reminderUserId" FromRole="reminder" ToRole="user" />
+  </EntityType>
+  <Association Name="FK_reminderIssueId">
+    <End Type="Service_Requests_Data_GOVModel.issue" Role="issue" Multiplicity="1" />
+    <End Type="Service_Requests_Data_GOVModel.reminder" Role="reminder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="issue">
+        <PropertyRef Name="issue_id" />
+      </Principal>
+      <Dependent Role="reminder">
+        <PropertyRef Name="reminder_issue_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_reminderUserId">
+    <End Type="Service_Requests_Data_GOVModel.user" Role="user" Multiplicity="1" />
+    <End Type="Service_Requests_Data_GOVModel.reminder" Role="reminder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="reminder">
+        <PropertyRef Name="reminder_user_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

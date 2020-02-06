@@ -58,5 +58,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="reminders">
+      <EntityTypeMapping TypeName="Service_Requests_Data_GOVModel.reminder">
+        <MappingFragment StoreEntitySet="reminders">
+          <ScalarProperty Name="reminder_enabled" ColumnName="reminder_enabled" />
+          <ScalarProperty Name="remider_date" ColumnName="remider_date" />
+          <ScalarProperty Name="reminder_user_id" ColumnName="reminder_user_id" />
+          <ScalarProperty Name="reminder_issue_id" ColumnName="reminder_issue_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

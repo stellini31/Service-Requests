@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.issuer_panel = new System.Windows.Forms.Panel();
             this.tel_text = new System.Windows.Forms.TextBox();
             this.id_text = new System.Windows.Forms.TextBox();
@@ -44,7 +45,6 @@
             this.title_label = new System.Windows.Forms.Label();
             this.issueInfo_Panel = new System.Windows.Forms.Panel();
             this.issues_combo = new System.Windows.Forms.ComboBox();
-            this.date_text = new System.Windows.Forms.TextBox();
             this.isssueType_label = new System.Windows.Forms.Label();
             this.date_label = new System.Windows.Forms.Label();
             this.description_text = new System.Windows.Forms.TextBox();
@@ -58,6 +58,9 @@
             this.remind_label = new System.Windows.Forms.Label();
             this.save_button = new System.Windows.Forms.Button();
             this.reminder_enable = new System.Windows.Forms.CheckBox();
+            this.dateCreated_label = new System.Windows.Forms.Label();
+            this.saved_label = new System.Windows.Forms.Label();
+            this.hide_success_label = new System.Windows.Forms.Timer(this.components);
             this.issuer_panel.SuspendLayout();
             this.issuedBy_panel.SuspendLayout();
             this.issueInfo_Panel.SuspendLayout();
@@ -213,8 +216,8 @@
             // issueInfo_Panel
             // 
             this.issueInfo_Panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.issueInfo_Panel.Controls.Add(this.dateCreated_label);
             this.issueInfo_Panel.Controls.Add(this.issues_combo);
-            this.issueInfo_Panel.Controls.Add(this.date_text);
             this.issueInfo_Panel.Controls.Add(this.isssueType_label);
             this.issueInfo_Panel.Controls.Add(this.date_label);
             this.issueInfo_Panel.Controls.Add(this.description_text);
@@ -232,15 +235,6 @@
             this.issues_combo.Name = "issues_combo";
             this.issues_combo.Size = new System.Drawing.Size(241, 28);
             this.issues_combo.TabIndex = 7;
-            // 
-            // date_text
-            // 
-            this.date_text.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.date_text.Location = new System.Drawing.Point(132, 209);
-            this.date_text.Name = "date_text";
-            this.date_text.ReadOnly = true;
-            this.date_text.Size = new System.Drawing.Size(241, 30);
-            this.date_text.TabIndex = 6;
             // 
             // isssueType_label
             // 
@@ -269,7 +263,6 @@
             this.description_text.MaximumSize = new System.Drawing.Size(300, 300);
             this.description_text.Multiline = true;
             this.description_text.Name = "description_text";
-            this.description_text.ReadOnly = true;
             this.description_text.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.description_text.Size = new System.Drawing.Size(241, 137);
             this.description_text.TabIndex = 1;
@@ -365,6 +358,7 @@
             this.save_button.TabIndex = 6;
             this.save_button.Text = "Save Changes";
             this.save_button.UseVisualStyleBackColor = true;
+            this.save_button.Click += new System.EventHandler(this.save_button_Click);
             // 
             // reminder_enable
             // 
@@ -378,11 +372,38 @@
             this.reminder_enable.UseVisualStyleBackColor = true;
             this.reminder_enable.CheckedChanged += new System.EventHandler(this.reminder_enable_CheckedChanged);
             // 
+            // dateCreated_label
+            // 
+            this.dateCreated_label.AutoSize = true;
+            this.dateCreated_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dateCreated_label.Location = new System.Drawing.Point(128, 216);
+            this.dateCreated_label.MaximumSize = new System.Drawing.Size(241, 48);
+            this.dateCreated_label.MinimumSize = new System.Drawing.Size(241, 25);
+            this.dateCreated_label.Name = "dateCreated_label";
+            this.dateCreated_label.Size = new System.Drawing.Size(241, 25);
+            this.dateCreated_label.TabIndex = 8;
+            this.dateCreated_label.Text = "Date Text";
+            // 
+            // saved_label
+            // 
+            this.saved_label.AutoSize = true;
+            this.saved_label.ForeColor = System.Drawing.Color.LightGreen;
+            this.saved_label.Location = new System.Drawing.Point(590, 541);
+            this.saved_label.Name = "saved_label";
+            this.saved_label.Size = new System.Drawing.Size(108, 17);
+            this.saved_label.TabIndex = 8;
+            this.saved_label.Text = "Changes Saved";
+            // 
+            // hide_success_label
+            // 
+            this.hide_success_label.Tick += new System.EventHandler(this.hide_success_label_Tick);
+            // 
             // ManageIssue
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(861, 602);
+            this.Controls.Add(this.saved_label);
             this.Controls.Add(this.reminder_enable);
             this.Controls.Add(this.actions_label);
             this.Controls.Add(this.save_button);
@@ -425,7 +446,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label title_label;
         private System.Windows.Forms.ComboBox issues_combo;
-        private System.Windows.Forms.TextBox date_text;
         private System.Windows.Forms.Label isssueType_label;
         private System.Windows.Forms.Label date_label;
         private System.Windows.Forms.TextBox description_text;
@@ -440,5 +460,8 @@
         private System.Windows.Forms.CheckBox reminder_enable;
         private System.Windows.Forms.Button submit_button;
         private System.Windows.Forms.TextBox actionSubmit_text;
+        private System.Windows.Forms.Label dateCreated_label;
+        private System.Windows.Forms.Label saved_label;
+        private System.Windows.Forms.Timer hide_success_label;
     }
 }

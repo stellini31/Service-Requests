@@ -16,15 +16,22 @@ namespace Service_Requests.UI
 {
     public partial class ManageIssue : Form
     {
-        List<action> actions = new List<action>();
-        issue i = MainApp.issues[MainApp.chosenRow - 1];
+        issue i;// = MainApp.issues[MainApp.chosenRow - 1];
         IssuesData id = new IssuesData();
         IssueType_Data itd = new IssueType_Data();
-        
+        Reminders_Data rd = new Reminders_Data();
+        string nameOrigin;
+        string idOrigin;
+        string telOrigin;
+        string descOrigin;
+        int issueTypeOrigin;
         Actions_Data ad = new Actions_Data();
-        public ManageIssue()
+
+        public ManageIssue(int IssueId)
         {
             InitializeComponent();
+            saved_label.Visible = false;
+            i = id.getIssueById(IssueId);
         }
 
 
@@ -38,11 +45,11 @@ namespace Service_Requests.UI
 
             title_label.Text = i.issue_title;
             creator_text.Text = i.issue_creator_username;
-            name_text.Text = i.issuer_name;
-            id_text.Text = i.issuer_id;
-            tel_text.Text = i.issuer_tel;
-            description_text.Text = i.issue_description;
-            date_text.Text = i.issue_date_created.ToString();
+            nameOrigin = name_text.Text = i.issuer_name;
+            idOrigin = id_text.Text = i.issuer_id;
+            telOrigin = tel_text.Text = i.issuer_tel;
+            descOrigin = description_text.Text = i.issue_description;
+            dateCreated_label.Text = i.issue_date_created.ToString();
 
             List<issue_types> issue_types = itd.getAllIssues();
 
@@ -50,16 +57,9 @@ namespace Service_Requests.UI
             {
                 issues_combo.Items.Add(it.issue_title);
             }
-            issues_combo.SelectedIndex = i.issue_type_id - 1;
+            issueTypeOrigin = issues_combo.SelectedIndex = i.issue_type_id-1;
 
-            actions = ad.getAllActionsForIssue(i.issue_id);
-            string concatActions = "";
-
-            foreach(action a in actions)
-            {
-                concatActions = concatActions + a.action_description + "\r\n\r\n";
-            }
-            actions_text.Text = concatActions;
+            this.populateActionsBox(i.issue_id);
 
             if (i.issue_ongoing)
             {
@@ -71,8 +71,19 @@ namespace Service_Requests.UI
                 statusShow_label.Text = "Complete";
             }
 
-            reminder_enable.Checked = false;
-            dateTimePicker1.Enabled = false;
+            if (rd.reminderEnabled(i.issue_id, SessionInfo.userId))
+            {
+                reminder_enable.Checked = true;
+                dateTimePicker1.Enabled = true;
+
+                dateTimePicker1.Value = rd.getReminder(i.issue_id, SessionInfo.userId).remider_date;
+            }
+            else
+            {
+                reminder_enable.Checked = false;
+                dateTimePicker1.Enabled = false;
+            }
+            
         }
 
         private void toggle_but_Click(object sender, EventArgs e)
@@ -92,14 +103,7 @@ namespace Service_Requests.UI
 
                 ad.addAction(a);
 
-                actions = ad.getAllActionsForIssue(i.issue_id);
-                string concatActions = "";
-
-                foreach (action ac in actions)
-                {
-                    concatActions = concatActions + a.action_description + "\r\n\r\n";
-                }
-                actions_text.Text = concatActions;
+                this.populateActionsBox(i.issue_id);
 
             }
             else
@@ -116,14 +120,7 @@ namespace Service_Requests.UI
 
                 ad.addAction(a);
 
-                actions = ad.getAllActionsForIssue(i.issue_id);
-                string concatActions = "";
-
-                foreach (action ac in actions)
-                {
-                    concatActions = concatActions + ac.action_description + "\r\n\r\n";
-                }
-                actions_text.Text = concatActions;
+                populateActionsBox(i.issue_id);
             }
         }
 
@@ -149,7 +146,85 @@ namespace Service_Requests.UI
             ad.addAction(a);
             actionSubmit_text.Text = "";
 
-            actions = ad.getAllActionsForIssue(i.issue_id);
+            this.populateActionsBox(i.issue_id);
+        }
+
+        private void save_button_Click(object sender, EventArgs e)
+        {
+            if (reminder_enable.Checked == true)
+            {
+                rd.saveReminder(i.issue_id, SessionInfo.userId, dateTimePicker1.Value.Date, true);
+            }
+            else
+            {
+                //update reminder enabled in db
+                rd.updateReminder(i.issue_id, SessionInfo.userId, dateTimePicker1.Value.Date, false);
+            }
+
+            //Update Issue Changes in DB
+            id.updateIssueData(i.issue_id, description_text.Text, name_text.Text, id_text.Text, tel_text.Text, itd.getIssueTypeByTitle(issues_combo.GetItemText(issues_combo.SelectedItem)).issue_type_id);
+
+            saved_label.Visible = true;
+
+            hide_success_label.Interval = 3000; // 3 seconds.
+            hide_success_label.Tick += hide_success_label_Tick;
+            hide_success_label.Start();
+
+            string actionMsg = "updated ";
+            Boolean changesMade = false;
+
+            if (!description_text.Text.Equals(descOrigin)){
+                actionMsg += "description, ";
+                changesMade = true;
+                descOrigin = description_text.Text;
+            }
+            if (!name_text.Text.Equals(nameOrigin))
+            {
+                actionMsg += "name, ";
+                changesMade = true;
+                nameOrigin = name_text.Text;
+            }
+            if (!id_text.Text.Equals(idOrigin))
+            {
+                actionMsg += "ID, ";
+                changesMade = true;
+                idOrigin = id_text.Text;
+            }
+            if (!tel_text.Text.Equals(telOrigin))
+            {
+                actionMsg += "telephone, ";
+                changesMade = true;
+                telOrigin = tel_text.Text;
+            }
+            if (issues_combo.SelectedIndex != issueTypeOrigin)
+            {
+                actionMsg += "issue type ";
+                changesMade = true;
+                issueTypeOrigin = issues_combo.SelectedIndex;
+            }
+
+            if (changesMade)
+            {
+                action a = new action();
+                a.action_description = actionMsg;
+                a.issue_id = i.issue_id;
+                a.user_id = SessionInfo.userId;
+                ad.addAction(a);
+                actionMsg = "updated ";
+
+                this.populateActionsBox(i.issue_id);
+            }
+        }
+
+        private void hide_success_label_Tick(object sender, EventArgs e)
+        {
+            saved_label.Visible = false;
+            hide_success_label.Stop();
+        }
+
+        public void populateActionsBox(int issueId)
+        {
+            List<action> actions = ad.getAllActionsForIssue(issueId);
             string concatActions = "";
 
             foreach (action ac in actions)

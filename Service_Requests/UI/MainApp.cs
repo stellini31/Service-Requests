@@ -27,35 +27,66 @@ namespace Service_Requests.UI
             InitializeComponent();
         }
 
-        void MainApp_Load(object sender, EventArgs e)
+        private void MainApp_Load(object sender, EventArgs e)
         {
-            
-            issues = id.getAllIssues();
-            issues.Reverse();
+            this.LoadAllIssues();
+        }
 
-            foreach(issue i in issues)
+        public void LoadAllIssues(List <issue> iss = null)
+        {
+
+            tableLayoutPanel1.RowCount = 1;
+            tableLayoutPanel1.Controls.Clear();
+            chosenRow = -1;
+
+            if(iss == null)
             {
-                this.AddItem(i.issue_title, i.issue_description, itd.getIssueTypeById(i.issue_type_id).issue_title, i.issue_date_created.ToString());
+                issues = id.getAllIssues();
+                issues.Reverse();
+
+                foreach (issue i in issues)
+                {
+                    this.AddItem(i.issue_title, i.issue_description, itd.getIssueTypeById(i.issue_type_id).issue_title, i.issue_date_created.ToString());
+                }
+
+                foreach (Label space in this.tableLayoutPanel1.Controls)
+                {
+                    space.MouseClick += new MouseEventHandler(clickOnSpace);
+                }
+
+                if (chosenRow != -1)
+                {
+                    int id = issues[chosenRow - 1].issue_id;
+                    ManageIssue mi = new ManageIssue(id);
+                    mi.ShowDialog();
+                }
             }
-
-            foreach (Label space in this.tableLayoutPanel1.Controls)
+            else
             {
-                space.MouseClick += new MouseEventHandler(clickOnSpace);
-            }
+                issues = iss;
+                issues.Reverse();
 
-            if(chosenRow != -1)
-            {
-                int id = issues[chosenRow - 1].issue_id;
-                ManageIssue mi = new ManageIssue(id);
-                mi.ShowDialog();
-                //opened = true;
+                foreach (issue i in issues)
+                {
+                    this.AddItem(i.issue_title, i.issue_description, itd.getIssueTypeById(i.issue_type_id).issue_title, i.issue_date_created.ToString());
+                }
+
+                foreach (Label space in this.tableLayoutPanel1.Controls)
+                {
+                    space.MouseClick += new MouseEventHandler(clickOnSpace);
+                }
+
+                if (chosenRow != -1)
+                {
+                    int id = issues[chosenRow - 1].issue_id;
+                    ManageIssue mi = new ManageIssue(id);
+                    mi.ShowDialog();
+                }
             }
         }
 
         private void AddItem(string title, string description, string type,  string dateCreated)
         {
-            //opened = false;
-            //this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 
             //get a reference to the previous existent 
             RowStyle temp = tableLayoutPanel1.RowStyles[tableLayoutPanel1.RowCount - 1];
@@ -64,7 +95,7 @@ namespace Service_Requests.UI
             //add a new RowStyle as a copy of the previous one
             tableLayoutPanel1.RowStyles.Add(new RowStyle(temp.SizeType, temp.Height));
             //add your three controls
-            tableLayoutPanel1.Controls.Add(new Label() { Text = title }, 0, tableLayoutPanel1.RowCount - 1);
+            tableLayoutPanel1.Controls.Add(new Label() { Text = title, Cursor = Cursors.Hand }, 0, tableLayoutPanel1.RowCount - 1);
             tableLayoutPanel1.Controls.Add(new Label() { Text = description }, 1, tableLayoutPanel1.RowCount - 1);
             tableLayoutPanel1.Controls.Add(new Label() { Text = type }, 2, tableLayoutPanel1.RowCount - 1);
             tableLayoutPanel1.Controls.Add(new Label() { Text = dateCreated }, 3, tableLayoutPanel1.RowCount - 1);
@@ -87,12 +118,29 @@ namespace Service_Requests.UI
                              
         }
 
-
-
         private void create_issue_button_Click(object sender, EventArgs e)
         {
             AddIssue addIssue = new AddIssue();
             addIssue.Show();
+        }
+
+        private void refresh_button_Click(object sender, EventArgs e)
+        {
+            
+            this.LoadAllIssues();
+        }
+
+        /*private void search_text_TextChanged(object sender, EventArgs e)
+        {
+            this.search_text.Text = "";
+        }*/
+
+        private void search_button_Click(object sender, EventArgs e)
+        {
+            string searchText = this.search_text.Text;
+            List<issue> isu = id.searchIssue(searchText);
+            this.LoadAllIssues(isu);
+
         }
     }
 }

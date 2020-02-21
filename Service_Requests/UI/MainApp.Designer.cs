@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainApp));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.column1_label = new System.Windows.Forms.Label();
             this.column4_label = new System.Windows.Forms.Label();
@@ -35,6 +36,9 @@
             this.column2_label = new System.Windows.Forms.Label();
             this.tablePanel = new System.Windows.Forms.Panel();
             this.create_issue_button = new System.Windows.Forms.Button();
+            this.refresh_button = new System.Windows.Forms.Button();
+            this.search_text = new System.Windows.Forms.TextBox();
+            this.search_button = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tablePanel.SuspendLayout();
             this.SuspendLayout();
@@ -44,19 +48,19 @@
             this.tableLayoutPanel1.AutoScroll = true;
             this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanel1.ColumnCount = 4;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.Controls.Add(this.column1_label, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.column4_label, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.column3_label, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.column2_label, 1, 0);
+            this.tableLayoutPanel1.Cursor = System.Windows.Forms.Cursors.Default;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1097, 613);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
@@ -119,11 +123,44 @@
             this.create_issue_button.UseVisualStyleBackColor = true;
             this.create_issue_button.Click += new System.EventHandler(this.create_issue_button_Click);
             // 
+            // refresh_button
+            // 
+            this.refresh_button.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("refresh_button.BackgroundImage")));
+            this.refresh_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.refresh_button.Location = new System.Drawing.Point(1057, 32);
+            this.refresh_button.Name = "refresh_button";
+            this.refresh_button.Size = new System.Drawing.Size(35, 35);
+            this.refresh_button.TabIndex = 4;
+            this.refresh_button.UseVisualStyleBackColor = true;
+            this.refresh_button.Click += new System.EventHandler(this.refresh_button_Click);
+            // 
+            // search_text
+            // 
+            this.search_text.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.search_text.Location = new System.Drawing.Point(527, 32);
+            this.search_text.Name = "search_text";
+            this.search_text.Size = new System.Drawing.Size(201, 26);
+            this.search_text.TabIndex = 5;
+            this.search_text.Tag = "";
+            // 
+            // search_button
+            // 
+            this.search_button.Location = new System.Drawing.Point(734, 32);
+            this.search_button.Name = "search_button";
+            this.search_button.Size = new System.Drawing.Size(82, 25);
+            this.search_button.TabIndex = 6;
+            this.search_button.Text = "Search";
+            this.search_button.UseVisualStyleBackColor = true;
+            this.search_button.Click += new System.EventHandler(this.search_button_Click);
+            // 
             // MainApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1114, 718);
+            this.Controls.Add(this.search_button);
+            this.Controls.Add(this.search_text);
+            this.Controls.Add(this.refresh_button);
             this.Controls.Add(this.tablePanel);
             this.Controls.Add(this.create_issue_button);
             this.Name = "MainApp";
@@ -133,6 +170,7 @@
             this.tableLayoutPanel1.PerformLayout();
             this.tablePanel.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -145,5 +183,8 @@
         private System.Windows.Forms.Panel tablePanel;
         private System.Windows.Forms.Button create_issue_button;
         private System.Windows.Forms.Label column1_label;
+        private System.Windows.Forms.Button refresh_button;
+        private System.Windows.Forms.TextBox search_text;
+        private System.Windows.Forms.Button search_button;
     }
 }

@@ -1,9 +1,11 @@
 C:\Users\User\Documents\My Docs\My_Coding_Projects\Service_Requests\Service_Requests\bin\Debug\Service_Requests.exe.config
 C:\Users\User\Documents\My Docs\My_Coding_Projects\Service_Requests\Service_Requests\bin\Debug\Service_Requests.exe
+C:\Users\User\Documents\My Docs\My_Coding_Projects\Service_Requests\Service_Requests\bin\Debug\Service_Requests.pdb
 C:\Users\User\Documents\My Docs\My_Coding_Projects\Service_Requests\Service_Requests\bin\Debug\EntityFramework.dll
 C:\Users\User\Documents\My Docs\My_Coding_Projects\Service_Requests\Service_Requests\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\User\Documents\My Docs\My_Coding_Projects\Service_Requests\Service_Requests\bin\Debug\EntityFramework.xml
 C:\Users\User\Documents\My Docs\My_Coding_Projects\Service_Requests\Service_Requests\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\User\Documents\My Docs\My_Coding_Projects\Service_Requests\Service_Requests\obj\Debug\Service_Requests.csprojResolveAssemblyReference.cache
 C:\Users\User\Documents\My Docs\My_Coding_Projects\Service_Requests\Service_Requests\obj\Debug\Service_Requests.Properties.Resources.resources
 C:\Users\User\Documents\My Docs\My_Coding_Projects\Service_Requests\Service_Requests\obj\Debug\Service_Requests.UI.AddIssue.resources
 C:\Users\User\Documents\My Docs\My_Coding_Projects\Service_Requests\Service_Requests\obj\Debug\Service_Requests.UI.Form1.resources
@@ -14,5 +16,3 @@ C:\Users\User\Documents\My Docs\My_Coding_Projects\Service_Requests\Service_Requ
 C:\Users\User\Documents\My Docs\My_Coding_Projects\Service_Requests\Service_Requests\obj\Debug\Service_Requests.csproj.CoreCompileInputs.cache
 C:\Users\User\Documents\My Docs\My_Coding_Projects\Service_Requests\Service_Requests\obj\Debug\Service_Requests.exe
 C:\Users\User\Documents\My Docs\My_Coding_Projects\Service_Requests\Service_Requests\obj\Debug\Service_Requests.pdb
-C:\Users\User\Documents\My Docs\My_Coding_Projects\Service_Requests\Service_Requests\bin\Debug\Service_Requests.pdb
-C:\Users\User\Documents\My Docs\My_Coding_Projects\Service_Requests\Service_Requests\obj\Debug\Service_Requests.csprojResolveAssemblyReference.cache

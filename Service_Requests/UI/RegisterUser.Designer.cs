@@ -208,6 +208,7 @@
             this.Controls.Add(this.connection_error_label);
             this.Name = "RegisterUser";
             this.Text = "RegisterUser";
+            this.Load += new System.EventHandler(this.RegisterUser_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

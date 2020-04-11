@@ -176,5 +176,10 @@ namespace Service_Requests.UI
             connection_error_label.Visible = false;
             hide_error_label.Stop();
         }
+
+        private void RegisterUser_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
